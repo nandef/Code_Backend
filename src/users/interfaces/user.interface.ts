@@ -1,7 +1,6 @@
-export interface user{
-    id:number;
-    nom:string;
-    prenom:string;
-    age:number;
-
-}
+interface User {
+    id: number;
+    nom: string;
+    prenom: string;
+    age: number;
+  }
