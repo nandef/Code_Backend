@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user-dto';
-//import { User } from './interfaces/user.interface';
+import { User } from './interfaces/user.interfaces';
+
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [
+   users: User[] = [
     {
       id: 1,
       nom: 'BOGRA',
@@ -17,6 +18,12 @@ export class UsersService {
       prenom: 'sarah',
       age: 21
     },
+    {
+    id: 3,
+      nom: 'ZOGBE',
+      prenom: 'deborah',
+      age: 19
+    }
   ];
 
   findAll(): User[] {
@@ -24,7 +31,7 @@ export class UsersService {
   }
 
   findOne(id: string): User {
-    const user = this.users.find(user => user.id === Number(id));
+    const user = this.users.find((user) => user.id === Number(id));
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
@@ -37,7 +44,7 @@ export class UsersService {
   
   update(id:string ,user:User){
     //recuperer l'utlisateur a mettre a jour
-       const userToUpdate=this.users.find(u=>u.id === +id);
+       const userToUpdate=this.users.find((user) => user.id === Number(id));
        if(userToUpdate){
         return new NotFoundException('utilisateur introuvable');
        }
@@ -53,8 +60,14 @@ export class UsersService {
   }
     
   delete(id:string ,user:User){
-    this.users=[...];
-    return 
+    const nbOfUsersBeforeDelete = this.users.length;
+    this.users=[...this.users.filter((user) => user.id === Number(id))];
+    if(this.users.length < nbOfUsersBeforeDelete){
+       return{deletedUser:1, nbOfUsers:this.users.length};
+    } else{
+        return{deletedUsers:0,nbUsers:this.users.length}
+    }
+
   }
  
 }

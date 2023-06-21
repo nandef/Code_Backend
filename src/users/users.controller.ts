@@ -2,11 +2,10 @@ import { Controller, Get, Body, Param, Post, Patch,Delete } from '@nestjs/common
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user-dto';
 
-//import { User } from './interfaces/user.interface';
+import { User } from './interfaces/user.interfaces';
 
 
-//localhost:3000/users
-@Controller('user')
+@Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -29,13 +28,12 @@ export class UsersController {
   updateUser(@Param('id') id: string, @Body() user: CreateUserDto) {
     return this.usersService.update(id, user);
   }
-  
 
 
-     @Delete(':id')
+
+  @Delete(':id')
      remove(@Param('id') id: string) {
      
-     }
+  }
  
 }
-
